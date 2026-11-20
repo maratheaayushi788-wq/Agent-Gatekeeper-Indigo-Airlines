@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Gatekeeper | IndiGo Airlines (Academic Prototype)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-logo-icon" title="IndiGo Flight Gatekeeper">
+          <!-- Aviation Plane Silhouette SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1>
+            Agent Gatekeeper
+            <span class="airline-badge">IndiGo Airlines</span>
+          </h1>
+          <p class="brand-subtitle">Autonomous AI Agent Governance & Security Gate (Academic Prototype — Not officially affiliated)</p>
+        </div>
+      </div>
+
+      <div class="header-meta">
+        <div class="enrollment-pill" title="MBA Student Enrollment">
+          <span>MBA Enrollment:</span>
+          <strong>PGD202563093</strong>
+        </div>
+        <div class="live-indicator">
+          <span class="pulse-dot"></span>
+          <span>Engine Active</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-tabs" role="tablist">
+        <button class="nav-btn active" data-tab="tab-evaluator">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Request Evaluator
+        </button>
+        <button class="nav-btn" data-tab="tab-agents">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+          Agent Registry
+          <span class="tab-badge" id="badge-agent-count">0</span>
+        </button>
+        <button class="nav-btn" data-tab="tab-approvals">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Customer Approvals
+          <span class="tab-badge badge-pending" id="badge-pending-count">0</span>
+        </button>
+        <button class="nav-btn" data-tab="tab-audit">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Audit Log
+        </button>
+        <button class="nav-btn" data-tab="tab-testing">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Testing Suite
+          <span class="tab-badge badge-active">6 Tests</span>
+        </button>
+        <button class="nav-btn" data-tab="tab-rulebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Rules Guide
+        </button>
+      </div>
+
+      <div class="quick-actions">
+        <button id="btn-seed-data" class="btn btn-secondary btn-sm" title="Restore sample demonstration data">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          Load Demo Data
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+
+    <!-- KPI Summary Grid (Always Visible) -->
+    <section class="kpi-grid">
+      <div class="kpi-card kpi-total">
+        <div class="kpi-info">
+          <h3>Total Requests</h3>
+          <div class="kpi-value" id="kpi-total-requests">0</div>
+          <div class="kpi-subtext">All processed agent queries</div>
+        </div>
+        <div class="kpi-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-allow">
+        <div class="kpi-info">
+          <h3>Allowed Requests</h3>
+          <div class="kpi-value" id="kpi-allowed-requests" style="color: var(--allow-green)">0</div>
+          <div class="kpi-subtext">Auto-approved (Rule 1, Rule 5)</div>
+        </div>
+        <div class="kpi-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-ask">
+        <div class="kpi-info">
+          <h3>Pending Confirmations</h3>
+          <div class="kpi-value" id="kpi-pending-requests" style="color: var(--ask-amber)">0</div>
+          <div class="kpi-subtext">Requires customer action</div>
+        </div>
+        <div class="kpi-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-block">
+        <div class="kpi-info">
+          <h3>Blocked Requests</h3>
+          <div class="kpi-value" id="kpi-blocked-requests" style="color: var(--block-red)">0</div>
+          <div class="kpi-subtext">Rejected security violations</div>
+        </div>
+        <div class="kpi-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        </div>
+      </div>
+
+      <div class="kpi-card kpi-agents">
+        <div class="kpi-info">
+          <h3>Active Agents</h3>
+          <div class="kpi-value" id="kpi-active-agents" style="color: #0284c7">0</div>
+          <div class="kpi-subtext">Registered & verified</div>
+        </div>
+        <div class="kpi-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 1: REQUEST EVALUATOR
+         ==================================================================== -->
+    <div class="tab-pane active" id="tab-evaluator">
+      <div class="two-col-grid">
+        
+        <!-- Left Column: Request Evaluation Form -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              </div>
+              <div>
+                <h2 class="card-title">Request Evaluation Form</h2>
+                <p class="card-subtitle">Submit AI agent actions to the IndiGo Gatekeeper</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="form-evaluate" novalidate>
+              
+              <!-- Customer Name -->
+              <div class="form-group">
+                <label class="form-label" for="eval-customer-name">
+                  Customer Name <span class="form-label-hint">(Passenger / Account Holder)</span>
+                </label>
+                <input type="text" id="eval-customer-name" class="form-control" placeholder="e.g. Priya Sharma" required>
+              </div>
+
+              <!-- Agent ID -->
+              <div class="form-group">
+                <label class="form-label" for="eval-agent-id">
+                  Agent ID <span class="form-label-hint">(Identity of requesting AI agent)</span>
+                </label>
+                <input type="text" id="eval-agent-id" class="form-control" placeholder="e.g. AGT-IND-101" required>
+                
+                <!-- Quick Selection Chips for Presentation Rehearsal -->
+                <div class="quick-fill-chips">
+                  <span style="font-size: 11px; color: var(--text-subtle); align-self: center;">Quick fill:</span>
+                  <button type="button" class="chip chip-active-agent" data-agent="AGT-IND-101" data-customer="Aarav Patel">AGT-IND-101 (Active)</button>
+                  <button type="button" class="chip chip-active-agent" data-agent="AGT-IND-102" data-customer="Priya Iyer">AGT-IND-102 (Active)</button>
+                  <button type="button" class="chip chip-danger chip-revoked-agent" data-agent="AGT-IND-103" data-customer="Rohan Mehra">AGT-IND-103 (Revoked)</button>
+                  <button type="button" class="chip chip-warning chip-unknown-agent" data-agent="AGT-UNKNOWN-999" data-customer="Guest User">Unknown Agent</button>
+                </div>
+              </div>
+
+              <!-- Action Dropdown -->
+              <div class="form-group">
+                <label class="form-label" for="eval-action">
+                  Requested Action <span class="form-label-hint">(Service requested by AI agent)</span>
+                </label>
+                <select id="eval-action" class="form-control" required>
+                  <option value="" disabled selected>-- Select Airline Service Action --</option>
+                  <option value="View Fare">View Fare (Read-only Fare Inquiry)</option>
+                  <option value="Book Flight">Book Flight (New Ticket Reservation)</option>
+                  <option value="Change Booking">Change Booking (Itinerary Modification)</option>
+                  <option value="Refund">Refund (Ticket Cancellation & Refund)</option>
+                  <option value="Delete Customer Account">Delete Customer Account (Unsupported Action)</option>
+                </select>
+              </div>
+
+              <!-- Conditional Refund Amount Field -->
+              <div id="refund-amount-container" class="refund-section">
+                <label class="form-label" for="eval-refund-amount">
+                  Refund Amount (INR ₹) <span class="form-label-hint">Threshold: ₹5,000</span>
+                </label>
+                <div class="input-with-prefix">
+                  <span class="input-prefix">₹</span>
+                  <input type="number" id="eval-refund-amount" class="form-control" placeholder="Enter amount in ₹, e.g. 2000 or 10000" min="1" step="100">
+                </div>
+                <div class="refund-rule-hint">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  <span>Rule 5: ₹5,000 or below is ALLOWED. Rule 6: Above ₹5,000 triggers ASK CUSTOMER.</span>
+                </div>
+                <div class="quick-fill-chips" style="margin-top: 8px;">
+                  <span style="font-size: 11px; color: var(--text-subtle); align-self: center;">Quick amounts:</span>
+                  <button type="button" class="chip" onclick="document.getElementById('eval-refund-amount').value='2000'">₹2,000 (Rule 5)</button>
+                  <button type="button" class="chip" onclick="document.getElementById('eval-refund-amount').value='5000'">₹5,000 (Rule 5)</button>
+                  <button type="button" class="chip chip-warning" onclick="document.getElementById('eval-refund-amount').value='10000'">₹10,000 (Rule 6)</button>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="btn-submit-eval" class="btn btn-primary btn-block">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Evaluate Request via Gatekeeper
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Column: Live Gatekeeper Decision Output -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-icon" style="background: #eef4fd; color: var(--indigo-primary);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              </div>
+              <div>
+                <h2 class="card-title">Gatekeeper Decision Output</h2>
+                <p class="card-subtitle">Real-time policy decision & risk assessment</p>
+              </div>
+            </div>
+            <span id="decision-status-pill" class="badge" style="display: none;">Evaluated</span>
+          </div>
+          <div class="card-body">
+            
+            <!-- Default Placeholder State -->
+            <div id="eval-placeholder" class="result-placeholder">
+              <div class="result-placeholder-icon">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <h3 style="font-size: 16px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">Awaiting AI Agent Request</h3>
+              <p style="font-size: 13px; max-width: 380px; margin: 0 auto;">Select or enter request parameters on the left to inspect the Gatekeeper's rule-based policy decision.</p>
+            </div>
+
+            <!-- Active Decision Output Card -->
+            <div id="eval-decision-container" class="decision-container">
+              
+              <!-- Large Decision Status Pill -->
+              <div id="eval-decision-badge" class="decision-badge-large">
+                <!-- Injected via JavaScript -->
+              </div>
+
+              <!-- Rule Number -->
+              <div>
+                <span id="eval-rule-number" class="rule-pill">RULE APPLIED</span>
+              </div>
+
+              <!-- Reason Statement -->
+              <p id="eval-reason" class="result-reason">Reason description will appear here.</p>
+
+              <!-- Request Metadata Grid -->
+              <div class="result-meta-grid">
+                <div class="result-meta-item">
+                  <strong>Customer</strong>
+                  <span id="eval-meta-customer">-</span>
+                </div>
+                <div class="result-meta-item">
+                  <strong>Agent ID</strong>
+                  <span id="eval-meta-agent">-</span>
+                </div>
+                <div class="result-meta-item">
+                  <strong>Action</strong>
+                  <span id="eval-meta-action">-</span>
+                </div>
+                <div class="result-meta-item">
+                  <strong>Amount</strong>
+                  <span id="eval-meta-amount">N/A</span>
+                </div>
+              </div>
+
+              <!-- Customer Confirmation Action Box (Only for ASK CUSTOMER) -->
+              <div id="eval-confirmation-box" class="confirmation-action-box" style="display: none;">
+                <div class="confirmation-header">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span>Customer Authorization Required</span>
+                </div>
+                <p class="confirmation-desc">This action has financial or itinerary impact. Please confirm or reject passenger consent below (Simulated: No actual booking or money transferred):</p>
+                <div class="confirmation-buttons">
+                  <button type="button" id="btn-inline-confirm" class="btn btn-success btn-sm">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Confirm Request
+                  </button>
+                  <button type="button" id="btn-inline-reject" class="btn btn-danger btn-sm">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Reject Request
+                  </button>
+                </div>
+                <div id="eval-confirmation-resolution" style="margin-top: 10px; font-weight: 700; display: none;"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         TAB 2: AGENT REGISTRATION & REVOCATION
+         ==================================================================== -->
+    <div class="tab-pane" id="tab-agents">
+      <div class="two-col-grid">
+        
+        <!-- Registration Form Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+              </div>
+              <div>
+                <h2 class="card-title">Register AI Agent</h2>
+                <p class="card-subtitle">Authorize a customer's autonomous travel agent</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="form-register-agent" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="reg-customer-name">Customer Name</label>
+                <input type="text" id="reg-customer-name" class="form-control" placeholder="e.g. Ananya Sen" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="reg-agent-name">Agent Name</label>
+                <input type="text" id="reg-agent-name" class="form-control" placeholder="e.g. IndiGo TravelCompanion" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="reg-agent-id">
+                  Agent ID <span class="form-label-hint">(Must be unique)</span>
+                </label>
+                <input type="text" id="reg-agent-id" class="form-control" placeholder="e.g. AGT-IND-104" required>
+                <small style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">System prevents duplicate Agent IDs.</small>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Register Agent
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Registered Agents Table Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <h2 class="card-title">Registered Agents Directory</h2>
+                <p class="card-subtitle">Manage agent access, active credentials, and revocations</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="data-table" id="table-agents">
+                <thead>
+                  <tr>
+                    <th>Agent ID</th>
+                    <th>Agent Name</th>
+                    <th>Customer Name</th>
+                    <th>Status</th>
+                    <th>Registered At</th>
+                    <th>Revoked At</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="table-agents-body">
+                  <!-- Injected via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         TAB 3: CUSTOMER CONFIRMATIONS (PENDING APPROVALS)
+         ==================================================================== -->
+    <div class="tab-pane" id="tab-approvals">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon" style="background: var(--ask-bg); color: var(--ask-amber);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <h2 class="card-title">Pending Customer Confirmations</h2>
+              <p class="card-subtitle">Review requests flagged with <strong>ASK CUSTOMER</strong> (Rule 3: Booking, Rule 4: Change, Rule 6: High Refund)</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="data-table" id="table-approvals">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Timestamp</th>
+                  <th>Customer</th>
+                  <th>Agent ID</th>
+                  <th>Action</th>
+                  <th>Amount</th>
+                  <th>Rule Triggered</th>
+                  <th>Reason</th>
+                  <th>Customer Decision</th>
+                </tr>
+              </thead>
+              <tbody id="table-approvals-body">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         TAB 4: AUDIT LOG
+         ==================================================================== -->
+    <div class="tab-pane" id="tab-audit">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div>
+              <h2 class="card-title">System Audit Log</h2>
+              <p class="card-subtitle">Complete chronological record of all evaluated AI agent requests</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-export-csv" class="btn btn-secondary btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download CSV
+            </button>
+            <button id="btn-clear-logs" class="btn btn-outline-danger btn-sm" title="Clear all audit logs">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Clear Logs
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          
+          <!-- Table Toolbar: Search and Filter -->
+          <div class="table-toolbar">
+            <div class="search-box">
+              <span class="search-box-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </span>
+              <input type="text" id="audit-search" class="form-control" placeholder="Search customer, agent, rule, or action...">
+            </div>
+
+            <div class="filter-group">
+              <select id="audit-filter-decision" class="form-control" style="width: auto;">
+                <option value="ALL">All Decisions</option>
+                <option value="ALLOW">ALLOW</option>
+                <option value="ASK CUSTOMER">ASK CUSTOMER</option>
+                <option value="BLOCK">BLOCK</option>
+              </select>
+
+              <select id="audit-filter-confirmation" class="form-control" style="width: auto;">
+                <option value="ALL">All Confirmation Statuses</option>
+                <option value="PENDING">PENDING</option>
+                <option value="CONFIRMED">CONFIRMED</option>
+                <option value="REJECTED">REJECTED</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Audit Log Table -->
+          <div class="table-responsive">
+            <table class="data-table" id="table-audit">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Customer Name</th>
+                  <th>Agent ID</th>
+                  <th>Requested Action</th>
+                  <th>Amount</th>
+                  <th>Decision</th>
+                  <th>Reason</th>
+                  <th>Rule Applied</th>
+                  <th>Confirmation Status</th>
+                </tr>
+              </thead>
+              <tbody id="table-audit-body">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         TAB 5: AUTOMATED TESTING SUITE (6 Test Cases)
+         ==================================================================== -->
+    <div class="tab-pane" id="tab-testing">
+      
+      <!-- Test Summary Header -->
+      <div class="test-summary-banner">
+        <div class="test-summary-title">
+          <h2>Automated Rule Verification Suite</h2>
+          <p>Executes all 6 required MBA assignment evaluation test cases against the IndiGo Gatekeeper logic.</p>
+        </div>
+        <div>
+          <button id="btn-run-all-tests" class="btn btn-success" style="background: #ffffff; color: var(--indigo-primary); font-weight: 800; font-size: 14px; padding: 12px 24px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Run All 6 Tests
+          </button>
+        </div>
+      </div>
+
+      <!-- Test Cases Grid -->
+      <div class="test-grid" id="test-grid-container">
+        <!-- Injected via JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- ====================================================================
+         TAB 6: RULEBOOK & MBA PRESENTATION GUIDE
+         ==================================================================== -->
+    <div class="tab-pane" id="tab-rulebook">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div>
+              <h2 class="card-title">IndiGo Gatekeeper Governance Policy Matrix</h2>
+              <p class="card-subtitle">MBA Architectural Framework: Autonomous AI Risk Mitigation</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="rulebook-grid">
+            
+            <div class="rule-card rule-allow">
+              <div class="rule-card-header">
+                <span class="rule-tag">RULE 1</span>
+                <span class="badge badge-allow">ALLOW</span>
+              </div>
+              <div class="rule-text">Registered active agents requesting read-only fare viewing are ALLOWED.</div>
+              <div class="rule-rationale"><strong>Risk Level: Zero.</strong> Read-only operations do not modify booking state, alter inventory, or charge credit accounts. Safe for autonomous AI handling.</div>
+            </div>
+
+            <div class="rule-card rule-block">
+              <div class="rule-card-header">
+                <span class="rule-tag">RULE 2</span>
+                <span class="badge badge-block">BLOCK</span>
+              </div>
+              <div class="rule-text">Unknown or unregistered agents are BLOCKED.</div>
+              <div class="rule-rationale"><strong>Risk Level: Critical.</strong> Unverified bots attempting to interface with airline APIs are rejected immediately to prevent scraping, credential stuffing, and bot attacks.</div>
+            </div>
+
+            <div class="rule-card rule-ask">
+              <div class="rule-card-header">
+                <span class="rule-tag">RULE 3</span>
+                <span class="badge badge-ask">ASK CUSTOMER</span>
+              </div>
+              <div class="rule-text">Flight booking requests require customer confirmation and return ASK CUSTOMER.</div>
+              <div class="rule-rationale"><strong>Risk Level: High Financial.</strong> Booking binds seat inventory, initiates payment charges, and issues legal passenger contracts. Human consent is legally and commercially mandatory.</div>
+            </div>
+
+            <div class="rule-card rule-ask">
+              <div class="rule-card-header">
+                <span class="rule-tag">RULE 4</span>
+                <span class="badge badge-ask">ASK CUSTOMER</span>
+              </div>
+              <div class="rule-text">Flight change requests require customer confirmation and return ASK CUSTOMER.</div>
+              <div class="rule-rationale"><strong>Risk Level: High Itinerary.</strong> Re-routing or modifying dates affects flight schedules, baggage transfers, and modification penalties. AI cannot unilaterally alter customer journeys.</div>
+            </div>
+
+            <div class="rule-card rule-allow">
+              <div class="rule-card-header">
+                <span class="rule-tag">RULE 5</span>
+                <span class="badge badge-allow">ALLOW</span>
+              </div>
+              <div class="rule-text">Refunds of ₹5,000 or below from registered active agents are ALLOWED.</div>
+              <div class="rule-rationale"><strong>Risk Level: Low Financial (Micro-refund).</strong> Cancellation of minor ancillary fees or budget sectors within ₹5,000 is auto-approved to streamline airline operations and customer NPS.</div>
+            </div>
+
+            <div class="rule-card rule-ask">
+              <div class="rule-card-header">
+                <span class="rule-tag">RULE 6</span>
+                <span class="badge badge-ask">ASK CUSTOMER</span>
+              </div>
+              <div class="rule-text">Refunds above ₹5,000 require customer confirmation and return ASK CUSTOMER.</div>
+              <div class="rule-rationale"><strong>Risk Level: Medium-High Financial.</strong> Substantial refunds above ₹5,000 trigger a human validation gate to eliminate unauthorized cancellations or rogue AI actions.</div>
+            </div>
+
+            <div class="rule-card rule-block">
+              <div class="rule-card-header">
+                <span class="rule-tag">RULE 7</span>
+                <span class="badge badge-block">BLOCK</span>
+              </div>
+              <div class="rule-text">Revoked agents are always BLOCKED, regardless of requested action.</div>
+              <div class="rule-rationale"><strong>Risk Level: Severe (Compromised Credential).</strong> Once a customer or security officer revokes an agent, access is irreversibly disabled with audit timestamping.</div>
+            </div>
+
+            <div class="rule-card rule-block">
+              <div class="rule-card-header">
+                <span class="rule-tag">RULE 8</span>
+                <span class="badge badge-block">BLOCK</span>
+              </div>
+              <div class="rule-text">Any unauthorized or unsupported action is BLOCKED.</div>
+              <div class="rule-rationale"><strong>Risk Level: High (Security Perimeter).</strong> Principle of Least Privilege: Any API verb or payload outside defined airline services is denied by default.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <strong>Agent Gatekeeper</strong>
+        <span>•</span>
+        <span>IndiGo Airlines Academic Case Study</span>
+      </div>
+      <div class="enrollment-pill" style="background: #f1f5f9; border-color: #cbd5e1; color: var(--text-main);">
+        <span>Student Enrollment Number:</span>
+        <strong style="color: var(--indigo-primary);">PGD202563093</strong>
+      </div>
+      <div class="footer-disclaimer">
+        Simulated prototype for MBA coursework. No live transactions or financial transfers.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>
